@@ -1,0 +1,72 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container row d-sm-flex   w-100 mt-4 ">
+    <div class="col-lg-6 flex-column">
+        <div class="">
+            <img class="w-75" src="{% static 'images/p1.png' %}" alt="">
+        </div >
+        <span class="w-100 mt-3 mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+             Corporis, nihil consectetur maxime odio commodi quis libero porro
+              neque quaerat exercitationem ipsa aspernatur nesciunt dolore
+               reprehenderit reiciendis
+             ex molestias aperiam rerum.
+        </span>
+        <span class="text-secondary mt-4 d-block font-weight-bold">$250</span>
+        <div class="star_container  text-warning  offset-lg-9 offset-7 ">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+        </div>
+        <div class="mt-2 mb-4 ">
+            <input class="form-control" type="number">
+        </div>
+        <div class="mt-2 mb-2">
+            <button class="btn btn-outline-warning w-100 "><i class="fa fa-shopping-cart mx-2"></i>add to cart</button>
+        </div>
+    </div>
+    <div class="col-lg-6 ">
+        <div class="flex flex-column  h-100 justify-content-between ">
+            <div class="row row-cols-4">
+                <div class="col">
+                    <img class=" w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+                <div class="col">
+                    <img class=" w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+                <div class="col">
+                    <img class=" w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+                <div class="col">
+                    <img class="w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+                <div class="col">
+                    <img class=" w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+            </div>
+            <h3>Videos</h3>
+            <div class="row row-cols-4">
+                <div class="col">
+                    <img class=" w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+                <div class="col">
+                    <img class=" w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+                <div class="col">
+                    <img class=" w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+                <div class="col">
+                    <img class="w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+                <div class="col">
+                    <img class=" w-100" src="{% static 'images/p1.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

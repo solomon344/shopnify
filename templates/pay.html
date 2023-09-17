@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Card Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    
+    .payment-form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .payment-form label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    
+    .payment-form input[type="text"],
+    .payment-form input[type="number"],
+    .payment-form input[type="date"],
+    .payment-form input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+    
+    .payment-form button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    
+    .payment-form button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-form">
+    <h2>Card Payment</h2>
+    <form>
+      <label for="cardNumber">Card Number</label>
+      <input type="text" id="cardNumber" placeholder="Card Number">
+      
+      <label for="cardName">Cardholder Name</label>
+      <input type="text" id="cardName" placeholder="Cardholder Name">
+      
+      <label for="expiryDate">Expiry Date</label>
+      <input type="date" id="expiryDate">
+      
+      <label for="cvv">CVV</label>
+      <input type="password" id="cvv" placeholder="CVV">
+      
+      <button id="pay" type="submit">Pay Now</button>
+    </form>
+  </div>
+  <script>
+    let get = localStorage.getItem("Final_Products")
+   $("#pay").on("click",()=>{
+    $.ajax({
+      headers:{
+        'x-CSRF-Token':$('input[name=csrfmiddlewaretoken]').val()
+      },
+      type:"POST",
+      url:"",
+      data:get,
+      success:res=>{
+        alert("success")
+      },
+      error:err=>{
+        alert("failed")
+      }
+    })
+   })
+  </script>
+</body>
+</html>

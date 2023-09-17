@@ -1,0 +1,108 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% block product %} 
+ active
+ {% endblock %}
+
+
+{% block content %}
+  
+  
+<style>
+  .add_to_cart:active {
+  background-color: #fae397;
+  }
+</style>
+
+  <!-- product section -->
+
+  <section class="product_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Our Products
+        </h2>
+      </div>
+      <div class="row">
+        {% for product in products %}
+        <div class="col-sm-6 col-lg-4">
+          <div class="box">
+            <div class="img-box">
+              <img src="{{ product.img.img.url }}" alt="">
+              <button   class="add_cart_btn border-0 add_to_cart" id="{{ product.id }}">
+                  Add To Cart
+              </button>
+            </div>
+            <div class="detail-box">
+              <h5>
+                {{ product.name }}
+              </h5>
+              <div class="product_info">
+                <h5>
+                  <span>$</span>{{ product.price }}
+                </h5>
+                <div class="star_container">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="btn_box">
+        <a href="" class="view_more-link">
+          View More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- end product section -->
+
+
+  <!-- info section -->
+  <!-- end info_section -->
+  
+  
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="{% url 'home' %}">Free Html Templates</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+  <script>
+    let element_id = {data:[]};
+    if (localStorage.getItem("products")){
+
+    }else{
+      localStorage.setItem("products",JSON.stringify(element_id))
+    }
+    document.addEventListener("click",(e)=>{
+      console.log(e.target.id)
+      if (e.target.id){
+        const getItem = localStorage.getItem("products")
+        let newItem = JSON.parse(getItem)
+        if (newItem.data.includes(e.target.id)){
+          
+        }else{
+          newItem.data.push(e.target.id)
+        }
+        localStorage.setItem("products",JSON.stringify(newItem))
+        console.log(JSON.parse(localStorage.getItem("products")))        
+        
+        
+      }
+    })
+  </script>
+{% endblock %}

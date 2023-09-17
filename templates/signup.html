@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signup Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #cccccc;
+      border-radius: 3px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: #ff0000;
+      margin-bottom: 10px;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Signup</h1>
+    <form id="signupForm">
+        {% csrf_token %}
+      <input id="first" type="text" name="first" placeholder="First Name" required>
+      <input id="last" type="text" name="last" placeholder="Last Name" required>
+      <input id="email" type="email" name="email" placeholder="Email" required>
+      <input id="password" type="password" name="password" placeholder="Password" required>
+      <input id="confirm" type="password" name="confirm" placeholder="Confirm Password" required>
+      <input type="submit" value="Sign Up">
+    </form>
+    <p class="error-message"></p>
+    <p class="login-link">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+  </div>
+</body>
+<script src="{% static 'js/jquery-3.4.1.min.js' %}" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+      $('#signupForm').submit(function(e) {
+        e.preventDefault(); // Prevent form submission
+        
+        var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        var formData = {
+            first: $("#first").val(),
+            last: $("#last").val(),
+            email: $("#email").val(),
+            password: $("#password").val(),
+            confirm: $("#confirm").val(),
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        }
+        $.ajax({
+          url: "{% url 'register' %}", // Replace with your backend URL
+          type: 'POST',
+          data: formData,
+          success: function(response) {
+            alert("success")
+            window.location.href = "{% url 'login' %}"
+            // Handle successful signup response
+            console.log(response);
+          },
+          error: function(xhr, status, error) {
+            // Handle error
+            console.error(error);
+          }
+        });
+      });
+    });
+  </script>
+</html>

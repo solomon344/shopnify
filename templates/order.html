@@ -1,0 +1,221 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="mt-4">
+    <div>
+    <div id="itemcont"></div>
+    <div class="row row-cols-1 row-cols-lg-3">
+        <div class="col p-3 ps-4">
+          <span id="me" class="text-">Total:</span>
+          <span class="ms-2">D<span id="total" class=" p-0 ms-1">12</span></span>
+          <!-- hold on -->
+          <Total/>
+        </div>
+        <div class="col">
+            <div class="p-3 ps-4">
+                <input class="form-check-inline" type="checkbox" name="" id="check">
+                <span class="ms-2 text-secondary">I agree to the terms of service</span>
+            </div>
+            <div class="p-3 ps-4">
+                <button id="checkoutbtn" class="btn btn-success w-100">proceed to checkout</button>
+            </div>
+        </div>
+        <div class="col p-3">
+          <div class="row row-cols-4">
+            <div class="col">
+                <img class="w-100" src="https://img.icons8.com/?size=512&id=13608&format=png" alt="">
+            </div>
+            <div class="col">
+                <img class="w-100" src="https://img.icons8.com/?size=512&id=CaSfJLdM4LTY&format=png" alt="">
+            </div>
+            <div class="col">
+                <img class="w-100" src="https://img.icons8.com/?size=512&id=So6jK8i6jddZ&format=png" alt="">
+            </div>
+            <div class="col">
+                <img class="w-100" src="https://img.icons8.com/?size=512&id=Sq0VNi1Afgmj&format=png" alt="">
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+<footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="{% url 'home' %}">Free Html Templates</a>
+      </p>
+    </div>
+  </footer>
+<script src="{% static 'js/jquery-3.4.1.min.js' %}" crossorigin="anonymous"></script>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+<!-- Getting the added to cart items from localSorage and displaying them -->
+<script>
+
+    // Initializing the total cost of products to be displayed for the user
+
+   var total = 0
+   var item_id = []
+   var total_list  = []
+   //Checking if the localSorage has a Products variable/item otherwise initialize one
+   if (localStorage.getItem("products")){
+    var items = JSON.parse(localStorage.getItem("products"))
+
+    //initalizing if not exist
+   }else{
+    var items = {data:[]}
+   }
+   //checking if the item list contains any items then loop through them and display them 
+    if (items.data.length > 0){
+        items.data.map((item)=>{
+            $.ajax({
+                url:"getproduct/"+item,
+                async:false,
+                success:prod=>{
+                    const data = `    <div id=${prod.id} class="row row-cols-2 border-bottom">
+      <div id="mainParent" class="p-3">
+        <div class="mb-3 flex flex-row-reverse justify-content-end w-100">
+            <i class="fa fa-heart"></i>
+            <span class="ms-3">favorite</span>
+        </div>
+        <div class="mb-3 ps-3">
+        <input item_id = ${prod.id} quantity=1 data-previous=1  data-price=${prod.price} value='1' id='quantity' oninput='updateTotal.call(this)' class="form-control w-75 mb-3" type="number" name="" id="" >
+        <button class="btn btn-danger w-75 mb-3">Delete</button>
+        </div>
+        <div class="p-2 ps-3">
+            <span class="text-secondary"><span id="piece">1</span> piece :</span>
+            <span id='price' class="ms-3 text-success">D${prod.price}</span>
+        </div>
+      </div>
+      <div>
+        <div class="mb-2">
+            <span id='name' class="fs-4 text-secondary">${prod.name}</span>
+        </div>
+        <div>
+            <img class="w-50" src="${prod.img}" alt="" srcset="">
+        </div>
+        <div>
+            <p class="text-truncate h-25">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque consequatur iusto odio excepturi eveniet qui rem, at reprehenderit ullam minus architecto totam eum? Porro enim quibusdam omnis adipisci illum hic laborum, dolore amet consectetur nesciunt nihil aliquid dolorum facere vero.</p>
+        </div>
+        <div class="star_container  text-warning  offset-md-9 offset-5 ">
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <i class="fa fa-star" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>`
+                    $("#itemcont").append(data)
+                    total_list.push(parseFloat(prod.price))
+
+                },
+                error:err=>{
+                    console.log(err)
+                }
+            })
+        }
+    );
+    for (let c = 0; c < total_list.length; c++){
+        total += total_list[c]
+    }
+    $("#total").text(String(total))
+}
+    // Ortherwise we let the user know that there is no product in the cart 
+    else{
+        alert("No product in cart")
+    } 
+    
+ 
+</script>
+<script>
+      
+
+</script>
+<script>
+    const settotal = $("#total")
+    
+    function updateTotal(){
+        let previous = parseInt(this.getAttribute("data-previous"))
+        let current = parseInt(this.value)
+        let item_price = parseFloat(this.getAttribute("data-price"))
+            
+           
+            if (isNaN(current) || current <= 0){
+            let newTotal = total - (item_price * previous)
+            total = newTotal
+            settotal.text(total)
+            this.setAttribute("data-previous","0")
+            }
+            else{
+            let newTotal = (total - (item_price * previous))  + (item_price * current)
+            total = newTotal
+            settotal.text(total)
+            this.setAttribute("data-previous",String(current))
+            
+            }
+        
+        
+    }
+</script>
+
+
+<!-- making sure that the user has agreed to the website's
+ terms of service before proceeding to payment. -->
+<script>
+    const checkoutbtn = $("#checkoutbtn")
+    const check = document.getElementById("check")
+    
+    checkoutbtn.on("click",()=>{
+    
+        if (check.checked){
+            window.location.href = "{% url 'pay' %}"
+        }
+        else{
+            let info = `<div id="info" style='left:35%;top:20px;' class='alert alert-warning position-fixed'>please accept the terms and coditions first</div>`
+            $("body").append(info)
+            mytimeout()
+            
+        }
+
+    })
+
+    function mytimeout (){
+        setTimeout(()=>{
+                let divinfo = document.getElementById("info")
+                divinfo.style.display = "none";
+                clearTimeout()
+            },5000)
+    }
+</script>
+
+
+
+<!-- Setting the final items of the cart to be taken to the database -->
+<script>
+    const final_products = {data:[]}
+    let btn = document.getElementById("checkoutbtn")
+
+    btn.addEventListener("click",()=>{
+        for (let i of $("#itemcont").children()){
+            let price = i.querySelector("#price").textContent
+            let quantity = i.querySelector("#quantity").getAttribute("data-previous")
+            let name = i.querySelector("#name").textContent
+            let prod_id = i.id
+            
+            let data = {"name":name,
+                        "id":prod_id,
+                        "quantity":quantity,
+                       }
+            final_products.data.push(data)
+            
+        }
+     localStorage.setItem("Final_Products",JSON.stringify(final_products))
+     let get = localStorage.getItem("Final_Products")
+     console.log(get)
+    })
+</script>
+{% endblock %}
