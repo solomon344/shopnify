@@ -26,34 +26,29 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+#class cart(models.Model):
+#     num_of_products = models.PositiveIntegerField()
+#     products = models.ManyToManyField(to=Product)
+    
 
-class sellProduct(models.Model):
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=0)
+    
 
 class cart(models.Model):
-    by = models.OneToOneField(User, on_delete=models.CASCADE)
     num_of_products = models.PositiveIntegerField()
-    products = models.ForeignKey(sellProduct, on_delete=models.CASCADE)
+    products = models.ManyToManyField(to=Product)
+    quantity = models.PositiveIntegerField(default=0)
 
 class Order(models.Model):
-    CHOICES = (
-        ('P','pending'),
-        ('D','delivered'),
-        ('C','cancelled'),
-    )
+   
     code = models.CharField(default=str(uuid4()).split("-")[-1],max_length=25)
-    status = models.CharField(max_length=200, choices=CHOICES)
+    status = models.CharField(default="Pending",max_length=200,)
     cart = models.OneToOneField(cart, on_delete=models.CASCADE)
+    by = models.ForeignKey(User,on_delete=models.CASCADE)
    
     def __str__(self) -> str:
         return self.by.username
 
-class Orderhistory(models.Model):
-    for_user = models.OneToOneField(User,on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return self.for_user.username
 
 class CustomerReview(models.Model):
     customer = models.OneToOneField(User, on_delete=models.CASCADE)

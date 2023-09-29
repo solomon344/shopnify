@@ -1,6 +1,7 @@
 {% extends 'partials/base.html' %}
 {% load static %}
 
+{% block title%} Cart {% endblock %}
 {% block content %}
 <section class="mt-4">
     <div>
@@ -8,7 +9,7 @@
     <div class="row row-cols-1 row-cols-lg-3">
         <div class="col p-3 ps-4">
           <span id="me" class="text-">Total:</span>
-          <span class="ms-2">D<span id="total" class=" p-0 ms-1">12</span></span>
+          <span class="ms-2">D<span id="total" class=" p-0 ms-1">0.00</span></span>
           <!-- hold on -->
           <Total/>
         </div>
@@ -83,7 +84,7 @@
         </div>
         <div class="mb-3 ps-3">
         <input item_id = ${prod.id} quantity=1 data-previous=1  data-price=${prod.price} value='1' id='quantity' oninput='updateTotal.call(this)' class="form-control w-75 mb-3" type="number" name="" id="" >
-        <button class="btn btn-danger w-75 mb-3">Delete</button>
+        <button item_id = ${prod.id} data-previous=1 data-price=${prod.price} onclick=deleteItem.call(this) class="btn btn-danger w-75 mb-3">Delete</button>
         </div>
         <div class="p-2 ps-3">
             <span class="text-secondary"><span id="piece">1</span> piece :</span>
@@ -149,17 +150,20 @@
             total = newTotal
             settotal.text(total)
             this.setAttribute("data-previous","0")
+            $(this).siblings("button").attr("data-previous","0")
             }
             else{
             let newTotal = (total - (item_price * previous))  + (item_price * current)
             total = newTotal
             settotal.text(total)
             this.setAttribute("data-previous",String(current))
-            
+            $(this).siblings("button").attr("data-previous",String(current))
             }
-        
+            
+           
         
     }
+   
 </script>
 
 
@@ -192,7 +196,33 @@
     }
 </script>
 
+<!-- Deleting the item when the delete button is clicked -->
 
+<script>
+
+
+    function deleteItem(){
+        let previous = parseInt(this.getAttribute("data-previous"))
+        let price = parseFloat(settotal.text())
+        let item_id = this.getAttribute("item_id")
+        let prod = JSON.parse(localStorage.getItem("products"))
+        let item_price = parseFloat(this.getAttribute("data-price"))
+        let x = prod.data.indexOf(item_id)
+        prod.data.splice(x,1)
+
+        localStorage.setItem("products",JSON.stringify(prod))
+
+        let parent = document.getElementById(item_id)
+        parent.style.display = 'none'
+        $("#cart_len").text(String(prod.data.length))
+        let newTotal = total - (item_price * previous)
+        total = newTotal
+        settotal.text(total)
+        console.log(price)
+        console.log(item_price)
+
+    }
+</script>
 
 <!-- Setting the final items of the cart to be taken to the database -->
 <script>

@@ -1,7 +1,8 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Card Payment</title>
+  <title>Checkout</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -54,7 +55,7 @@
 <body>
   <div class="payment-form">
     <h2>Card Payment</h2>
-    <form>
+    <form id="form">
       <label for="cardNumber">Card Number</label>
       <input type="text" id="cardNumber" placeholder="Card Number">
       
@@ -70,18 +71,22 @@
       <button id="pay" type="submit">Pay Now</button>
     </form>
   </div>
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}" crossorigin="anonymous"></script>
   <script>
     let get = localStorage.getItem("Final_Products")
-   $("#pay").on("click",()=>{
+   var formdata = {
+      items:get,
+      csrfmiddlewaretoken: "{{ csrf_token }}"
+    }
+    
+   $("#form").submit((e)=>{
+    e.preventDefault()
     $.ajax({
-      headers:{
-        'x-CSRF-Token':$('input[name=csrfmiddlewaretoken]').val()
-      },
-      type:"POST",
-      url:"",
-      data:get,
+      type: "POST",
+      url: "{% url 'set_order' %}",
+      data: formdata,
       success:res=>{
-        alert("success")
+        window.location.href = "{% url 'allert' %}"
       },
       error:err=>{
         alert("failed")

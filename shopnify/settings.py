@@ -119,9 +119,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-#setting the medial files dir
-MEDIA_URL = 'media/'
-MEDIA_ROOT = (os.path.join(BASE_DIR,'media'))
+token = os.environ['USER_ACCESS_TOKEN']
+email  = os.environ['USER_EMAIL']
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = email
+EMAIL_HOST_PASSWORD = token
+EMAIL_USE_TLS = True

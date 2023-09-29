@@ -460,6 +460,8 @@ a:focus {
   color: #ffffff;
 }
 
+
+
 .product_section .box .img-box::before {
   content: "";
   position: absolute;

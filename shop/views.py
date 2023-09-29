@@ -9,9 +9,15 @@ import time
 from string import digits
 from random import choices
 from django.http import JsonResponse
-from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from .order_handler import CreateCart
+from shopnify import settings
+from email.message import EmailMessage
+import smtplib
+
+
+#from django_email_center.views.email_center import EmailCenter
 
 # Create your views here.
 
@@ -122,13 +128,31 @@ def getSingleProduct(request,id):
     print(img[0].img.url)
     return JsonResponse(p1,safe=False)
 
+@login_required(redirect_field_name="next",login_url='login')
+def allert(request):
+    return render(request,'allert.html')
+
+def Cart_Order(request):
+    CreateCart(request=request)
+    return redirect('/')
+
 
 
 @receiver(post_save,sender=Order)
-def send_order_main(sender,instance,created,**kwargs):
+def send_order_mail(sender,instance,created,**kwargs):
+    
     if created:
+
         subject = "Order placed"
-        message = "Thank you for ordering at Shopnify, your orders will be delivered soon"
-        from_mail = "willamssolomon672@gmail.com"
-        to_mail = instance.email
-        send_mail(subject,message,from_mail,[to_mail])
+        message_body = f"Thank you for ordering at Shopnify, your orders will be delivered soon. \n \n Your order Code is {instance.code} \n \n your order status is {instance.status} \n \n \n \n The Shopnify Team"
+        
+        
+        msg = EmailMessage()
+        msg['Subject'] = subject
+        msg['From'] = settings.email 
+        msg['To'] = instance.by.email 
+        msg.set_content(message_body)
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(settings.email, settings.token) 
+            smtp.send_message(msg)

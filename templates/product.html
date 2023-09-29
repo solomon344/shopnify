@@ -6,13 +6,14 @@
  active
  {% endblock %}
 
+ {% block title%} Products {% endblock %}
 
 {% block content %}
   
   
 <style>
-  .add_to_cart:active {
-  background-color: #fae397;
+  .add_cart_btn:active {
+  background-color: #fff6d7;
   }
 </style>
 
@@ -33,6 +34,7 @@
               <img src="{{ product.img.img.url }}" alt="">
               <button   class="add_cart_btn border-0 add_to_cart" id="{{ product.id }}">
                   Add To Cart
+                  
               </button>
             </div>
             <div class="detail-box">
@@ -41,7 +43,7 @@
               </h5>
               <div class="product_info">
                 <h5>
-                  <span>$</span>{{ product.price }}
+                  <span>D</span>{{ product.price }}
                 </h5>
                 <div class="star_container">
                   <i class="fa fa-star" aria-hidden="true"></i>
@@ -97,6 +99,8 @@
           
         }else{
           newItem.data.push(e.target.id)
+          $("#cart_len").text(String(newItem.data.length))
+          $("#cart_len").addClass("bg-danger")
         }
         localStorage.setItem("products",JSON.stringify(newItem))
         console.log(JSON.parse(localStorage.getItem("products")))        

@@ -13,5 +13,7 @@ urlpatterns = [
     path('checkout',views.chekout,name="checkout"),
     path('profile',views.profile,name="profile"),
     path('pay',views.pay,name="pay"),
-    path('getproduct/<str:id>',views.getSingleProduct,name="singleProduct")
+    path('getproduct/<str:id>',views.getSingleProduct,name="singleProduct"),
+    path("createorder",views.Cart_Order,name="set_order"),
+    path("allert",views.allert,name="allert")
 ]

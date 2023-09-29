@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful | messeage</title>
+</head>
+<body>
+    
+<div>
+    <center> <h1>Thank you For Shopping at Shopnify </h1></center>
+</div>
+<div class="mt-3">
+    <center><span> Your Order is been successfully placed </span></center>
+</div>
+
+<script>
+    localStorage.removeItem("Final_Products")
+    localStorage.removeItem("products")
+
+    setTimeout(()=>{
+        window.location.href = "{% url 'product' %}"
+    },10000)
+</script>
+
+</body>
+</html>
