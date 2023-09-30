@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import Http404
 import time
-from string import digits
+from string import digits,ascii_letters
 from random import choices
 from django.http import JsonResponse
 from django.db.models.signals import post_save

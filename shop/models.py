@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from uuid import uuid4
+from string import digits, ascii_letters
+from random import choices
 # Create your models here.
 
 class Profile(models.Model):
@@ -41,7 +42,7 @@ class cart(models.Model):
 
 class Order(models.Model):
    
-    code = models.CharField(default=str(uuid4()).split("-")[-1],max_length=25)
+    code = models.CharField(default= ''.join(choices(digits+ascii_letters,k=10)),max_length=25)
     status = models.CharField(default="Pending",max_length=200,)
     cart = models.OneToOneField(cart, on_delete=models.CASCADE)
     by = models.ForeignKey(User,on_delete=models.CASCADE)
