@@ -1,6 +1,13 @@
+aiosmtplib==2.0.2
+annotated-types==0.5.0
 asgiref==3.7.2
 Django==4.2.4
 django-cors-headers==4.2.0
 Pillow==10.0.0
+psycopg==3.1.12
+psycopg2==2.9.8
+pydantic==2.3.0
+pydantic_core==2.6.3
 sqlparse==0.4.4
+typing_extensions==4.7.1
 tzdata==2023.3
