@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-k44s_0tu(u15uhgy&83!nzp+5%!qz%ste)hw4k4=3lwkf7@hic
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['shopnify-t22z-ja24dx9vr-solomon344.vercel.app', '.vercel.app','localhost']
 
 
 # Application definition
