@@ -131,8 +131,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-token = os.environ['USER_ACCESS_TOKEN']
-email  = os.environ['USER_EMAIL']
+token = os.getenv('USER_ACCESS_TOKEN')
+email  = os.getenv('USER_EMAIL')
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_HOST_USER = email
