@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "shopnify/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "shopnify/wsgi.py"
+      }
+    ]
+}
