@@ -82,9 +82,8 @@ WSGI_APPLICATION = 'shopnify.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'URL': os.getenv('POSTGRES_URL'),
         'NAME': 'shopnify',
-        'USER': os.getenv('PGUSER'),
+        'USER': 'shopnify',
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': os.getenv('PGHOST'),
         'PORT': os.getenv('PGPORT'),
