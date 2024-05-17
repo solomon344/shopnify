@@ -3,7 +3,7 @@
       {
         "src": "shopnify/wsgi.py",
         "use": "@vercel/python",
-        "config":{"runtime":"python3.12.1"}
+        "config":{"runtime":"python3.11.4"}
       }
     ],
     "routes": [
