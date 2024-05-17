@@ -12,9 +12,10 @@ from django.http import JsonResponse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .order_handler import CreateCart
-from shopnify import settings
+from .auth_creds import email,token
 from email.message import EmailMessage
 import smtplib
+import os
 
 
 #from django_email_center.views.email_center import EmailCenter
@@ -113,7 +114,7 @@ def chekout(request,*args,**kwargs):
 
 @login_required(redirect_field_name="next",login_url="login")
 def profile(request):
-    return render(request,'profile.html')
+    return render(request,'profile.html',context={'user':request.user})
 
 @login_required(redirect_field_name="next",login_url="login")
 def pay(request):
@@ -149,10 +150,12 @@ def send_order_mail(sender,instance,created,**kwargs):
         
         msg = EmailMessage()
         msg['Subject'] = subject
-        msg['From'] = settings.email 
+        msg['From'] = email
         msg['To'] = instance.by.email 
         msg.set_content(message_body)
-
+        print(os.environ.get("EMAIL_PASSWORD"))
+        # for key,item in os.environ.items():
+        #     print(key,item)
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-            smtp.login(settings.email, settings.token) 
+            smtp.login(email,os.environ.get("EMAIL_PASSWORD")) 
             smtp.send_message(msg)
