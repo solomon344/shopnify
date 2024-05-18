@@ -144,8 +144,13 @@ def send_order_mail(sender,instance,created,**kwargs):
     
     if created:
 
-        subject = "Order placed"
-        message_body = f"Thank you for ordering at Shopnify, your orders will be delivered soon. \n \n Your order Code is {instance.code} \n \n your order status is {instance.status} \n \n \n \n The Shopnify Team"
+        subject = "Order Placed"
+        message_body = f"""
+        Dear {instance.by.first_name} {instance.by.last_name}, thank you for ordering at Shopnify.
+        Your orders will be delivered soon. \n \n 
+        Your order Code is {instance.code} \n \n
+        your order status is {instance.status} \n \n \n \n 
+        The Shopnify Team"""
         
         
         msg = EmailMessage()

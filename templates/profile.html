@@ -29,7 +29,7 @@
         <div class="flex flex-column p-4">
            <div class="flex flex-row border-bottom mb-3 w-100">
             <i class="fa fa-shopping-cart fa-2x text-primary"></i>
-            <a class="ms-3 fs-4 fw-medium link-secondary" href="">My Cart</a>
+            <a class="ms-3 fs-4 fw-medium link-secondary" href="{% url 'set_order' %}">My Cart</a>
             <span class="ms-3 text-secondary">0 items</span>
            </div>
            <div class="flex flex-row border-bottom mb-3 w-100">
@@ -53,7 +53,7 @@
            </div>
            <div class="flex flex-row border-bottom w-100">
             <i class="fa fa-long-arrow-left fa-2x text-danger"></i>
-            <a class="ms-3 fs-4 fw-medium link-secondary" href="">Logout</a>
+            <a class="ms-3 fs-4 fw-medium link-secondary" href="{% url 'logout' %}">Logout</a>
            </div>
         </div>
     </div>
